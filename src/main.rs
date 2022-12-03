@@ -8,8 +8,7 @@ fn main() {
     let args: Vec<String> = env::args().collect();
 
     if (args.len() as i32) < 3 {
-        println!("Require two arguments, filepath and desired amount of lines ouput. e.g \n./file_shortener.sh -- /tmp/my_logs 10000");
-        panic!()
+        panic!("Require two arguments, filepath and desired amount of lines ouput. e.g \n./file_shortener.sh -- /tmp/my_logs 10000");
     }
 
     let length = &args[2].parse::<i32>().unwrap();
@@ -31,8 +30,6 @@ fn main() {
         panic!("The file has no lines");
     }
 
-    println!("{}", lines_amount);
-
     // reset files position to start
     match file.seek(std::io::SeekFrom::Start(0)) {
         Ok(res) => res,
@@ -42,8 +39,6 @@ fn main() {
     };
 
     for (i, line_result) in BufReader::new(&file).lines().enumerate() {
-        println!("{}", i);
-
         let line = match line_result {
             Ok(line) => format!("\n{}", line),
             Err(error) => {
